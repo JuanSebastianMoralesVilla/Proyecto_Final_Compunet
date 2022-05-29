@@ -16,90 +16,69 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.taller1SM.controller.interfaces.StoreController;
 import com.taller1SM.model.prod.Product;
+import com.taller1SM.model.sales.Store;
 import com.taller1SM.service.ProductService;
+import com.taller1SM.service.StoreService;
 
 @Controller
 public class StoreControllerImp  implements StoreController{
 
 	
 
-	private ProductService productService;
+	private StoreService StoreService;
 
 	@Autowired
-	public ProductControllerImp(ProductService productService) {
 
-		this.productService = productService;
+	public StoreControllerImp(com.taller1SM.service.StoreService storeService) {
+		
+		StoreService = storeService;
 	}
 
-	@GetMapping("/templatesProduct/")
-	public String indexProduct(Model model) {
-		model.addAttribute("products", productService.findAll());
+	@GetMapping("/templatesStore/")
+	public String indexStore(Model model) {
+		model.addAttribute("stores", StoreService.findAll());
 		System.out.println("ENTRE A LA PAGINA");
-		return "tempLatesProduct/Index";
+		return "tempLatesStore/Index";
 	}
 
-	@GetMapping("/templatesProduct/add-product")
+
+	@GetMapping("/templatesStore/add-store")
 	public String listProduct(Model model) {
-		model.addAttribute("product", new Product());
-		model.addAttribute("subcategories", productService.findAllSubcategory());
-		System.out.println("subcategorias agregadas");
+		model.addAttribute("store", new Store());
+		
 
-		return "templatesProduct/add-product";
+		return "templatesStore/add-store";
 	}
 
-	@PostMapping("/templatesProduct/add-product/")
-	public String saveProduct(@Validated @ModelAttribute Product product, BindingResult bindingResult, Model model,
+	@PostMapping("/templatesStore/add-store/")
+	public String saveProduct(@Validated @ModelAttribute Store store, BindingResult bindingResult, Model model,
 			@RequestParam(value = "action", required = true) String action) {
 
 		if (!action.equals("Cancel")) {
-			model.addAttribute("subcategories", productService.findAllSubcategory());
-			if (bindingResult.hasErrors()) {
-				return "templatesProduct/add-product";
-			} else if (product.getSellenddate().isBefore(product.getSellstartdate())) {
-				model.addAttribute("dateError", true);
-				return "templatesProduct/add-product";
-			}
-			productService.saveProduct(product, null, product.getProductsubcategory().getProductsubcategoryid());
+			//model.addAttribute("subcategories", productService.findAllSubcategory());
+		if (bindingResult.hasErrors()) {
+				return "templatesStore/add-store";
+			} 
+			
+			//else if (store.getModifieddate().isBefore()) {
+			//	model.addAttribute("dateError", true);
+			//	return "templatesProduct/add-product";
+			//}
+		
+			StoreService.saveStore(store);
 		}
-		return "redirect:/templatesProduct/";
+		return "redirect:/templatesStore/";
 	}
 	
-	@GetMapping("/templatesProduct/edit/{id}")
-	public String showUpdateProduct(@PathVariable("id") Integer id, Model model) {
-		Optional<Product> product = productService.findById(id);
-		if (product == null)
-			throw new IllegalArgumentException("invalide Id:" + id);
-		model.addAttribute("product", product.get());
-		model.addAttribute("subcategories", productService.findAllSubcategory());
-		return "templatesProduct/update-product";
-	}
-
-	@PostMapping("/templatesProduct/edit/{id}")
-	public String updateProduct(
-			@PathVariable("id") Integer id, 
-			@RequestParam(value = "action", required = true) String action,
-			@Validated @ModelAttribute Product product, 
-			BindingResult bindingResult,
-			Model model
-			) {
-		if (action.equals("Cancel"))
-			return "redirect:/templatesProduct/";
-		if (product.getSellstartdate() != null && product.getSellenddate() != null) {
-			if (product.getSellstartdate().isAfter(product.getSellenddate())) {
-				bindingResult.addError(
-						// mensaje de error mediante campo de error mismo nombre en el html
-						new FieldError("product", "sellstartdate", "La fecha de inicio de venta debe ser menor a la fecha final de venta."));
-			}
-		}
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("subcategories", productService.findAllSubcategory());
-			product.setProductid(id);
-			return "templatesProduct/update-product";
-		}
-		if (!action.equals("Cancel")) {
-			productService.editProduct(id, product, null, product.getProductsubcategory().getProductsubcategoryid());
-			model.addAttribute("products", productService.findAll());
-		}
-		return "redirect:/templatesProduct/";
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+

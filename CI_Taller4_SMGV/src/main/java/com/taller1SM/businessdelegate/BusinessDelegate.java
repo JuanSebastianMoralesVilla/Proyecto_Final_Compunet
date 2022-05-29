@@ -19,10 +19,12 @@ import java.util.List;
 public class BusinessDelegate implements BusinessDelgateI {
 	
 	private final static String URL = "http://localhost:8080/api";
-    private final static String PRO_URL = URL + "/products/";
-    private final static String LOC_URL = URL + "/locations/";
-    private final static String PCH_URL = URL + "/productcosthistory/";
-    private final static String PI_URL = URL + "/productinventory/";
+    private final static String PRO_URL = URL + "/templatesProduct/";
+    private final static String LOC_URL = URL + "/templatesLocation/";
+    private final static String PCH_URL = URL + "/templatesProductCostHistoric/";
+    private final static String PI_URL = URL + "/templatesProductInventory/";
+    private final static String COST_URL = URL + "/templatesCostumer/";
+    private final static String STOR_URL = URL + "/templatesStore/";
     
     private RestTemplate restTemplate;
 

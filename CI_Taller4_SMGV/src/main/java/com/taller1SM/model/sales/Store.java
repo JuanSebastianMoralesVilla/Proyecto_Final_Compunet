@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * The persistent class for the store database table.
@@ -27,11 +29,14 @@ public class Store implements Serializable {
 	@SequenceGenerator(name = "STORE_BUSINESSENTITYID_GENERATOR", allocationSize = 1, sequenceName = "STORE_SEQ")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STORE_BUSINESSENTITYID_GENERATOR")
 	private Integer businessentityid;
-
+	
+	@NotNull
+	@Size (min=5)
 	private String demographics;
 
 	private Timestamp modifieddate;
-
+@NotNull
+@Size (min=5)
 	private String name;
 
 	private Integer rowguid;
