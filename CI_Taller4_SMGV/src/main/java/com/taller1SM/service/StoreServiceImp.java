@@ -58,6 +58,7 @@ public class StoreServiceImp  implements StoreService{
 	
 	
 	@Override
+	@Transactional
 	public void delete(Store store) {
 		storeDao.delete(store);
 		

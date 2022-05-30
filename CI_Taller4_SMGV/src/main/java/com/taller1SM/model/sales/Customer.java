@@ -2,6 +2,7 @@ package com.taller1SM.model.sales;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,6 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * The persistent class for the customer database table.
@@ -28,10 +34,16 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUSTOMER_CUSTOMERID_GENERATOR")
 	private Integer customerid;
 
-	private Timestamp modifieddate;
-
+	
+	@FutureOrPresent
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate modifieddate;
+	
+	
 	private Integer personid;
 
+	@Min(1)
+	@NotNull
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Salesterritory
@@ -62,7 +74,7 @@ public class Customer implements Serializable {
 		return this.customerid;
 	}
 
-	public Timestamp getModifieddate() {
+	public LocalDate getModifieddate() {
 		return this.modifieddate;
 	}
 
@@ -97,7 +109,7 @@ public class Customer implements Serializable {
 		this.customerid = customerid;
 	}
 
-	public void setModifieddate(Timestamp modifieddate) {
+	public void setModifieddate(LocalDate modifieddate) {
 		this.modifieddate = modifieddate;
 	}
 

@@ -20,11 +20,13 @@
 		<h2 class="mb-5">Update location</h2>
 		<div class="row">
 			<div class="col-md-6">
-				<form action="#" th:action="@{/templatesLocation/edit/{id}(id=${location.locationid})}" 
-				th:object="${location}"
-					method="post">
+				<form action="#"
+					th:action="@{/templatesLocation/edit/{id}(id=${location.locationid})}"
+					th:object="${location}" method="post">
 					<div class="row">
 						<div class="form-group col-md-6">
+
+
 							<label for="name" class="col-form-label">Name</label> <input
 								type="text" th:field="*{name}" class="form-control" id="name"
 								placeholder=""> <span
@@ -32,16 +34,16 @@
 								class="text-danger"></span>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="availability" class="col-form-label">Availability</label> <input
-								type="text" th:field="*{availability}" class="form-control" id="availability"
-								placeholder=""> <span
-								th:if="${#fields.hasErrors('availability')}" th:errors="*{availability}"
-								class="text-danger"></span>
+							<label for="availability" class="col-form-label">Availability</label>
+							<input type="text" th:field="*{availability}"
+								class="form-control" id="availability" placeholder=""> <span
+								th:if="${#fields.hasErrors('availability')}"
+								th:errors="*{availability}" class="text-danger"></span>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="costrate" class="col-form-label">Cost Rate</label> <input
-								type="text" th:field="*{costrate}" class="form-control" id="costrate"
-								placeholder=""> <span
+								type="text" th:field="*{costrate}" class="form-control"
+								id="costrate" placeholder=""> <span
 								th:if="${#fields.hasErrors('costrate')}" th:errors="*{costrate}"
 								class="text-danger"></span>
 						</div>

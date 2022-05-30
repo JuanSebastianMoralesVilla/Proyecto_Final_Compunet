@@ -6,9 +6,13 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.taller1SM.model.sales.Customer;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
 
-public class TCostumerDao implements ICostumerDao {
+import com.taller1SM.model.sales.Customer;
+@Repository
+@Scope("singleton")
+public class TCustomerDao implements ICostumerDao {
 
 	
 	
@@ -41,7 +45,7 @@ public class TCostumerDao implements ICostumerDao {
 
 	@Override
 	public List<Customer> findAll() {
-		String jpql = "customerid  a from Customer a";
+		String jpql = "select  a from Customer a";
 		return entityManagerStore.createQuery(jpql).getResultList();
 	}
 
