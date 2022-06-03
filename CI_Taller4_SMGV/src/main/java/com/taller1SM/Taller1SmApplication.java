@@ -18,6 +18,8 @@ import com.taller1SM.model.prod.Productcategory;
 import com.taller1SM.model.prod.Productcosthistory;
 import com.taller1SM.model.prod.Productinventory;
 import com.taller1SM.model.prod.Productsubcategory;
+import com.taller1SM.model.sales.Customer;
+import com.taller1SM.model.sales.Store;
 import com.taller1SM.model.user.User;
 import com.taller1SM.model.user.UserType;
 import com.taller1SM.repositories.LocationRepository;
@@ -27,7 +29,9 @@ import com.taller1SM.repositories.ProductcategoryRepository;
 import com.taller1SM.repositories.ProductcosthistoryRepository;
 import com.taller1SM.repositories.ProductinventoryRepository;
 import com.taller1SM.repositories.UserRepository;
+import com.taller1SM.service.CustomerServiceImp;
 import com.taller1SM.service.ProductServiceImp;
+import com.taller1SM.service.StoreServiceImp;
 
 
 
@@ -56,7 +60,8 @@ public class Taller1SmApplication {
 	public CommandLineRunner runner( ProductRepository productRepository, 
 			ProductSubcategoryRepository subcategoryRepo, ProductcategoryRepository categoryRepo,
 			LocationRepository locationRepository, ProductcosthistoryRepository costRepo, 
-			ProductinventoryRepository inventoryRepo, UserRepository userRepository) {
+			ProductinventoryRepository inventoryRepo, UserRepository userRepository, StoreServiceImp storeService,
+			CustomerServiceImp customerService) {
 		
 		return (args) -> {
 			
@@ -185,6 +190,20 @@ public class Taller1SmApplication {
 			inventary.setProduct(productRepository.findById(1).get());
 			inventary.setQuantity(43);
 			inventoryRepo.save(inventary);
+			
+			
+			Store store = new Store();
+			store.setName("Best buy");
+			store.setDemographics("norte de cali");
+			store.setModifieddate(LocalDate.of(2022, 7, 28));
+			store.setRowguid(2);
+			storeService.saveStore(store);
+			
+			Customer customer = new Customer();
+			customer.setPersonid(1);
+			customer.setModifieddate(LocalDate.of(2022, 7, 28));
+			customer.setRowguid(2);
+			customerService.saveCustomer(customer);
 			
 		
 		};
